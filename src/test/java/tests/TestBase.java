@@ -9,12 +9,17 @@ import static helper.AttachmentHelper.attachVideo;
 import static helper.AttachmentHelper.getConsoleLogs;
 
 import com.codeborne.selenide.Configuration;
+import config.DriverConfig;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class TestBase {
+
+  static DriverConfig driverConfig = ConfigFactory.create(DriverConfig.class);
+
   @BeforeAll
   static void setup() {
     addListener("AllureSelenide", new AllureSelenide());
@@ -27,8 +32,15 @@ public class TestBase {
     Configuration.startMaximized = true;
     String remoteWebDriver = System.getProperty("remote.web.driver");
 
-    if(remoteWebDriver != null) {
-      Configuration.remote = remoteWebDriver;
+    if (remoteWebDriver != null) {
+      String user = driverConfig.remoteWebUser();
+      String password = driverConfig.remoteWebPassword();
+      Configuration.remote = String.format(remoteWebDriver, user, password);
+
+      System.out.println(user);
+      System.out.println(password);
+      System.out.println(remoteWebDriver);
+      System.out.println(String.format(remoteWebDriver, user, password));
     }
   }
 
@@ -37,8 +49,9 @@ public class TestBase {
     attachScreenshot("Last screenshot");
     attachPageSource();
     attachAsText("Browser console logs", getConsoleLogs());
-    if(System.getProperty("video.storage") != null)
+    if (System.getProperty("video.storage") != null) {
       attachVideo();
+    }
     closeWebDriver();
   }
 }
