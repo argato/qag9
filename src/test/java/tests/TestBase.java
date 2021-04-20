@@ -29,7 +29,7 @@ public class TestBase {
     Configuration.browserCapabilities = capabilities;
     Configuration.browser = System.getProperty("web.browser", "chrome");
     Configuration.startMaximized = Boolean.parseBoolean(
-        System.getProperty("start.maximized", "true"));
+        System.getProperty("start.maximized"));
 
     String remoteWebDriver = System.getProperty("remote.web.driver");
 
