@@ -28,19 +28,15 @@ public class TestBase {
     capabilities.setCapability("enableVideo", true);
     Configuration.browserCapabilities = capabilities;
     Configuration.browser = System.getProperty("web.browser", "chrome");
+    Configuration.startMaximized = Boolean.parseBoolean(
+        System.getProperty("start.maximized", "true"));
 
-    Configuration.startMaximized = true;
     String remoteWebDriver = System.getProperty("remote.web.driver");
 
     if (remoteWebDriver != null) {
       String user = driverConfig.remoteWebUser();
       String password = driverConfig.remoteWebPassword();
       Configuration.remote = String.format(remoteWebDriver, user, password);
-
-      System.out.println(user);
-      System.out.println(password);
-      System.out.println(remoteWebDriver);
-      System.out.println(String.format(remoteWebDriver, user, password));
     }
   }
 

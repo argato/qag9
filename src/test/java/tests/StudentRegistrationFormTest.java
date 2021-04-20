@@ -13,7 +13,7 @@ public class StudentRegistrationFormTest extends TestBase {
   StudentRegistrationFormPage studentRegistrationFormPage = new StudentRegistrationFormPage();
 
   @Test
-  @Owner("anovikova")
+  @Owner("arina_ng")
   @Feature("Форма регистрации студента")
   @Story("Проверка регистрации студента без ошибки")
   @DisplayName("Тест без ошибки")
